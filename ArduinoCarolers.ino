@@ -1,7 +1,10 @@
 #include "ArduinoCarolers.h"
 #include <IRremote.h>
 
-const int deviceNumber = 2;
+const int deviceNumber = 3;
+
+int _isMaster = 0;
+int _deviceList[] = {9, 9, 9, 9}; //max 4 devices , and initial 9
 
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
@@ -17,11 +20,19 @@ void loop()
 {
   if (irrecv.decode(&results))
   {
+    
     Serial.println(results.value, HEX);
     irrecv.resume(); // Receive the next value
-    if (results.value == 0x010)
+
+    //Check master
+    if(results.value < 10){
+      CheckMaster();
+    }
+
+    if (results.value == 0x010) //if receive, No 1 then send the device number
     {
-      Serial.println("Received No 1 from Sony Remote");
+      Serial.println("Received No 1 from Sony Remote, send device number");
+      //TODO, send device number.
     }
     if (results.value == 0x810)
     {
@@ -57,6 +68,36 @@ void loop()
     {
       Serial.println("Received PLAY from Sony Remote");
     }
+  }
+}
+
+void CheckMaster()
+{
+  //try to find from device list
+  int found = 0;
+  int minDeviceNo = 9;
+  for (int i = 0; i < 4; i++ ) {
+      if(_deviceList[i]== results.value){
+        Serial.println("Device already received");
+        found = 1;  
+      }
+      if(_deviceList[i] < minDeviceNo)
+        minDeviceNo = _deviceList[i];
+  }
+  
+  if(found == 0) { //not found, add to the device list
+    for (int i = 0; i < 4; i++ ) {
+        if(_deviceList[i]== 9){
+          _deviceList[i] = results.value;
+        }
+    }    
+  }
+
+  if(results.value < minDeviceNo){
+    _isMaster = 1;
+    Serial.println("Master is " + _isMaster);
+  } else {
+    _isMaster = 0;
   }
 }
 
