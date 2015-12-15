@@ -1,6 +1,8 @@
 #include "ArduinoCarolers.h"
 #include <IRremote.h>
 
+const int deviceNumber = 2;
+
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
 decode_results results;
@@ -37,8 +39,7 @@ void loop()
     {
       Serial.println("Received No 7 from Sony Remote. Start Playing");
       Serial.println("Jingle Bell Rocks");
-      PlayTune(JingleBellRock, countOf(JingleBellRock));
-      delay(tuneGap);
+      JingleBells();
     }
     if (results.value == 0xE10)
     {
@@ -59,7 +60,7 @@ void loop()
   }
 }
 
-void PlayTune(NoteType *tune, size_t numNotes)
+void PlayTune(const NoteType *tune, size_t numNotes)
 {
   Serial.println(numNotes);
 
@@ -70,3 +71,19 @@ void PlayTune(NoteType *tune, size_t numNotes)
   }
 }
 
+void JingleBells()
+{  
+  switch (deviceNumber)
+  {
+    case 1: PlayTune(JingleBells1, countOf(JingleBells1));
+    break;
+
+    case 2: PlayTune(JingleBells2, countOf(JingleBells2));
+    break;    
+    
+    case 3: PlayTune(JingleBells3, countOf(JingleBells3));
+    break;
+    
+  }
+  
+}
