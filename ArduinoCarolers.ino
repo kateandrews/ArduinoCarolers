@@ -1,8 +1,9 @@
 #include "ArduinoCarolers.h"
 #include "SongUtils.h"
 #include <IRremote.h>
+#include <IRremoteInt.h>
 
-int curDeviceNumber = -1;
+int curDeviceNumber = 3;
 
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
@@ -25,6 +26,20 @@ void loop()
   {
     Serial.println(results.value, HEX);
     irrecv.resume(); // Receive the next value
+
+    //Check master
+    if(results.value < 10){
+      Serial.println("Check master");
+      CheckMaster();
+    }
+    
+    if (results.value == 0xA90) //if receive, Power button
+    {
+      Serial.println("Received Power button from Sony Remote, send device number");
+      SendDeviceNumber();
+      irrecv.enableIRIn(); // Start the receiver
+    }
+
     if (results.value == 0x010)
     {
       Serial.println(F("Received No 1 from Sony Remote"));
@@ -65,5 +80,7 @@ void loop()
     }
   }
 }
+
+
 
 
