@@ -3,7 +3,7 @@
 #include <IRremote.h>
 #include <IRremoteInt.h>
 
-int curDeviceNumber = 3;
+int curDeviceNumber = -1;
 
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
@@ -29,6 +29,7 @@ void loop()
 
     //Check master
     if(results.value < 10){
+      Serial.println("Received Device number:"+results.value);
       Serial.println("Check master");
       CheckMaster();
     }

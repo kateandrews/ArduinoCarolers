@@ -5,11 +5,13 @@ IRsend irsend;
 
 
 void SendDeviceNumber(){
+    //int curDevice = GetDeviceId();
       //send device number twice
       for (int i = 0; i <2; i++)
       {
-        Serial.println("Sending device number");
-        irsend.sendSony (0x3, 11); //current device number
+        Serial.print( F("Sending device number: "));
+        Serial.println(curDeviceNumber);
+        irsend.sendSony (curDeviceNumber, 12); //current device number
         delay(100);
       };  
 }
