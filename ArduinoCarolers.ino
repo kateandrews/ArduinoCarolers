@@ -1,10 +1,12 @@
 #include "ArduinoCarolers.h"
 #include <IRremote.h>
+#include <IRremoteInt.h>
 
 const int deviceNumber = 3;
 
 int _isMaster = 0;
 int _deviceList[] = {9, 9, 9, 9}; //max 4 devices , and initial 9
+IRsend irsend;
 
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
@@ -32,7 +34,13 @@ void loop()
     if (results.value == 0x010) //if receive, No 1 then send the device number
     {
       Serial.println("Received No 1 from Sony Remote, send device number");
-      //TODO, send device number.
+      //send device number twice
+      for (int i = 0; i <2; i++)
+      {
+        irsend.sendSony (0x3, 12); //current device number
+        delay(100);
+      };
+
     }
     if (results.value == 0x810)
     {
