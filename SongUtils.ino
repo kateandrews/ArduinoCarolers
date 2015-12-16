@@ -5,6 +5,19 @@
 #include "SystemTones.h"
 #include "WeWishYouAMerryChristmas.h"
 
+void PlaySong(int SongNo, int PartNo)
+{
+  switch(SongNo)
+  {
+    case1:
+      PlayJingleBells(PartNo);
+      break;
+    case2:
+      PlayMerryChristmas(PartNo);
+      break;
+  }
+}
+
 unsigned long CalcDurationMs( byte duration, byte tempo )
 {
   unsigned long result =  duration * (tempo/Te);
@@ -35,7 +48,20 @@ void PlayJingleBells(int partNumber)
     
     case 3: PlayTune(JingleBellsDeviceThree, CountOf(JingleBellsDeviceThree));
     break;
-    
   }
-  
+}
+
+void PlayMerryChristmas(int partNumber)
+{  
+  switch (partNumber)
+  {
+    case 1: PlayTune(MerryChristmasDeviceOne, CountOf(MerryChristmasDeviceOne));
+    break;
+
+    case 2: PlayTune(MerryChristmasDeviceTwo, CountOf(MerryChristmasDeviceTwo));
+    break;    
+    
+    case 3: PlayTune(MerryChristmasDeviceThree, CountOf(MerryChristmasDeviceThree));
+    break;
+  }
 }
