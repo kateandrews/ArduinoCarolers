@@ -1,10 +1,7 @@
 # ArduinoCarolers
 Arduinos Carolling in harmony
 
-ArduinoCarolers is a sketch for the Arduino UNO that uses .... 
+ArduinoCarolers is a sketch for the Arduino UNO that controls three Arduinos "singing" Christmas Carols in harmony. 
 
-
-
-Details can be found at
-http://gaz77a.github.io/ArduinoCarolers/
+For details, see http://gaz77a.github.io/ArduinoCarolers/
 
