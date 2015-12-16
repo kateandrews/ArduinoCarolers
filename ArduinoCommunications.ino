@@ -20,7 +20,9 @@ void SendIRMessage(int DeviceID, int SongNo, int PartNo)
   Serial.println("Sent");
 }
 
-void IsMsgFromRemote(int Msg)
+void IsMsgFromRemote(int Msg){
+  
+}
 
 void InformWhatToPlay2(int devID1, int devID2, int SongNo)
 {
