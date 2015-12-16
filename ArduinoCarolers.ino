@@ -3,6 +3,9 @@
 #include <IRremote.h>
 
 int curDeviceNumber = -1;
+int MsgForDevice = -1;
+int SongNoToPlay = -1;
+int PartNoToPlay = -1;
 
 int RECV_PIN = 11; // define input pin on Arduino
 IRrecv irrecv(RECV_PIN);
@@ -24,6 +27,12 @@ void loop()
   if (irrecv.decode(&results))
   {
     Serial.println(results.value, HEX);
+    
+    DecodeIRMessage(results.value);
+    if (MsgForDevice = -1)
+    {
+      //This Message is not a valid message from arduino device, check if it is from Remote
+    }
     irrecv.resume(); // Receive the next value
     if (results.value == 0x010)
     {
